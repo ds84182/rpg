@@ -3,6 +3,8 @@
 
 import 'dart:html';
 
+import 'package:rpg_client/rpg_client.dart';
+
 void main() {
-  querySelector('#output').text = 'Your Dart app is running.';
+  new BrowserGame(querySelector("#canvas") as CanvasElement);
 }
