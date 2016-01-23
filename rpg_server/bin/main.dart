@@ -18,23 +18,15 @@ main(List<String> args) {
     var server = new web_server.WebServer(InternetAddress.ANY_IP_V4, 8080, hasHttpServer: true);
     var client = new HttpClient();
 
-    server.httpServerHandler.registerDirectory(new web_server.UrlPath("/")).listen((request) async {
-      var clientRequest = await client.get("localhost", 13234, request.uri.path);
+    server.httpServerHandler.handleRequestsStartingWith(new web_server.UrlPath("/static")).listen((request) async {
+      var clientRequest = await client.get("localhost", 13234, request.uri.pathSegments.skip(1).join("/"));
       clientRequest.cookies.addAll(request.cookies);
 
-      request.headers.forEach((name, values) {
-        for (var str in values) {
-          clientRequest.headers.add(name, str);
-        }
-      });
+      request.headers.forEach(clientRequest.headers.set);
 
       var clientResponse = await clientRequest.close();
 
-      clientResponse.headers.forEach((name, values) {
-        for (var str in values) {
-          request.response.headers.add(name, str);
-        }
-      });
+      clientResponse.headers.forEach(request.response.headers.set);
 
       request.response.statusCode = clientResponse.statusCode;
 
