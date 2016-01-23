@@ -4,3 +4,4 @@ description: A simple console application.
 dependencies:
   rpg_common:
     path: ../rpg_common
+  path: "^1.3.9"
