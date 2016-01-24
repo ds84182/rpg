@@ -11,6 +11,10 @@ class StoneTile extends Tile {
   const StoneTile();
 }
 
+class GrassTile extends Tile {
+  const GrassTile();
+}
+
 class World {
   Game game;
   int width, height;
@@ -37,7 +41,7 @@ class World {
       });
     }*/
     //TODO: Noise wrapper with seeds and stuff
-    grid.mapInto((x, y) => simplex2(x.toDouble(), y.toDouble()) < 0 ? const StoneTile() : null);
+    grid.mapInto((x, y) => simplex2(x.toDouble()/8.0, y.toDouble()/8.0) < 0 ? const StoneTile() : const GrassTile());
     print("Done!");
   }
 }
