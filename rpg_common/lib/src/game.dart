@@ -1,7 +1,5 @@
 part of rpg_common;
 
-class Entity {}
-
 abstract class Game {
   bool started = false;
   num lastTime = 0;
