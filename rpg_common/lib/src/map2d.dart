@@ -35,4 +35,10 @@ class Map2D<T> {
       }
     }
   }
+
+  void fill(T element) =>
+      contents.fillRange(0, contents.length, element);
+
+  void clear() =>
+      fill(null);
 }
