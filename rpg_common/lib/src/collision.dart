@@ -78,7 +78,9 @@ class CollisionManager {
   Vector2 _tempCell1 = new Vector2.zero();
   Vector2 _tempCell2 = new Vector2.zero();
 
-  CollisionManager(this.cellSize) : invCellSize = 1 / cellSize;
+  CollisionManager(this.cellSize) {
+    invCellSize = 1 / cellSize;
+  }
 
   void add(CollisionObject object) {
     managed.add(object);
@@ -89,9 +91,9 @@ class CollisionManager {
   void updateCells(CollisionObject object) {
     //find cells that would contain this object
     var minCell =
-        _tempCell1.copyInto(object.aabb.min).scale(invCellSize).floor();
+        object.aabb.min.copyInto(_tempCell1).scale(invCellSize).floor();
     var maxCell =
-        _tempCell2.copyInto(object.aabb.max).scale(invCellSize).floor();
+    object.aabb.max.copyInto(_tempCell2).scale(invCellSize).floor();
 
     object.cells.forEach((point) => cellMap[point]?.remove(object));
     object.cells.clear();
