@@ -7,6 +7,7 @@ import 'package:rpg_common/rpg_common.dart';
 
 part 'render.dart';
 
+part 'render/tile/generic.dart';
 part 'render/world.dart';
 
 part 'resource.dart';

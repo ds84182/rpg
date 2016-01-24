@@ -2,6 +2,17 @@ part of rpg_client;
 
 const int WORLD_BLOCK_RENDER_SIZE = 32; //px
 
+//typedef void TileRenderer(BrowserGame game, World world, Tile tile, int x, int y);
+
+abstract class TileRenderer {
+  void render(BrowserGame game, World world, Tile tile, int x, int y);
+}
+
+Map<Type, TileRenderer> tileRenderers = {
+  StoneTile: new GenericTileRenderer("stone")
+};
+TileRenderer unknownTileRenderer = new GenericTileRenderer("debug");
+
 void RenderWorld(BrowserGame game, World world) {
   var context = game.context;
 
@@ -17,8 +28,11 @@ void RenderWorld(BrowserGame game, World world) {
   //TODO: Map2D.forEachInRegion
   for (int x=startX; x<=endX; x++) {
     for (int y=startY; y<=endY; y++) {
-      if (world.grid.isInside(x, y) && world.grid.get(x, y) != null) {
-        context.fillRect(x*WORLD_BLOCK_RENDER_SIZE, y*WORLD_BLOCK_RENDER_SIZE, WORLD_BLOCK_RENDER_SIZE, WORLD_BLOCK_RENDER_SIZE);
+      Tile tile;
+      if (world.grid.isInside(x, y) && (tile = world.grid.get(x, y)) != null) {
+        var renderer = tileRenderers[tile.runtimeType] ?? unknownTileRenderer;
+
+        renderer.render(game, world, tile, x*WORLD_BLOCK_RENDER_SIZE, y*WORLD_BLOCK_RENDER_SIZE);
       }
     }
   }
