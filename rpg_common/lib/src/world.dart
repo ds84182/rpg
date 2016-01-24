@@ -37,7 +37,7 @@ class World {
       });
     }*/
     //TODO: Noise wrapper with seeds and stuff
-    grid.mapInto((x, y) => simplex2(x, y) < 0.25 ? const StoneTile() : null);
+    grid.mapInto((x, y) => simplex2(x.toDouble(), y.toDouble()) < 0 ? const StoneTile() : null);
     print("Done!");
   }
 }
