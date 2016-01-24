@@ -19,10 +19,16 @@ class BrowserGame extends Game {
 
   Camera camera = new Camera();
 
+  TestEntity testEnt1;
+  TestEntity testEnt2;
+
   BrowserGame(this.canvas) {
     context = canvas.context2D;
 
-    start();
+    start().then((_) {
+      addEntity(testEnt1 = new TestEntity(this, 64.0, 64.0));
+      addEntity(testEnt2 = new TestEntity(this, 80.0, 80.0));
+    });
 
     window.onFocus.listen((ev) {
       if (!focus) {

@@ -3,7 +3,14 @@ part of rpg_client;
 typedef void RenderFunc(BrowserGame game, object);
 
 Map<Type, RenderFunc> renderers = {
-  World: RenderWorld
+  World: RenderWorld,
+
+  TestEntity: (BrowserGame game, TestEntity entity) {
+    game.context.fillStyle = "red";
+    var hwidth = entity.width/2;
+    var hheight = entity.height/2;
+    game.context.fillRect(entity.x-hwidth, entity.y-hheight, entity.width, entity.height);
+  },
 };
 
 void doRender(BrowserGame game, object) {
