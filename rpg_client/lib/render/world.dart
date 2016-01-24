@@ -2,8 +2,6 @@ part of rpg_client;
 
 const int WORLD_BLOCK_RENDER_SIZE = 32; //px
 
-//typedef void TileRenderer(BrowserGame game, World world, Tile tile, int x, int y);
-
 abstract class TileRenderer {
   void render(BrowserGame game, World world, Tile tile, int x, int y);
 }
