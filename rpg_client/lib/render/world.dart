@@ -7,7 +7,8 @@ abstract class TileRenderer {
 }
 
 Map<Type, TileRenderer> tileRenderers = {
-  StoneTile: new GenericTileRenderer("stone")
+  StoneTile: new GenericTileRenderer("stone"),
+  GrassTile: new GenericTileRenderer("grass"),
 };
 TileRenderer unknownTileRenderer = new GenericTileRenderer("debug");
 
