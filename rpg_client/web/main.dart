@@ -5,6 +5,8 @@ import 'dart:html';
 
 import 'package:rpg_client/rpg_client.dart';
 
+BrowserGame game;
+
 void main() {
-  new BrowserGame(querySelector("#canvas") as CanvasElement);
+  game = new BrowserGame(querySelector("#canvas") as CanvasElement);
 }
