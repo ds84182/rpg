@@ -5,7 +5,8 @@ abstract class Game {
   num lastTime = 0;
 
   World world;
-  List<Entity> entities = <Entity>[];
+  CollisionManager collisionManager = new CollisionManager(64);
+  List<Entity> entities = [];
 
   Future start() async {
     if (!started) {
@@ -18,6 +19,11 @@ abstract class Game {
 
       render();
     }
+  }
+
+  void addEntity(Entity e) {
+    entities.add(e);
+    collisionManager.add(e);
   }
 
   void render();
