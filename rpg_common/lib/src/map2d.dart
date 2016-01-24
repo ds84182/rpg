@@ -14,8 +14,9 @@ class Map2D<T> {
   T get(int x, int y) =>
       contents[(y*width)+x];
 
-  void set(int x, int y, T value) =>
+  void set(int x, int y, T value) {
       contents[(y*width)+x] = value;
+  }
 
   void forEach(void callback(int x, int y, T val)) {
     //TODO: Maybe faster if single loop with i, x, and y

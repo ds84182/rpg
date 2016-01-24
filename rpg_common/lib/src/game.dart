@@ -7,7 +7,7 @@ abstract class Game {
   World world;
   List<Entity> entities = <Entity>[];
 
-  void start() async {
+  Future start() async {
     if (!started) {
       started = true;
 

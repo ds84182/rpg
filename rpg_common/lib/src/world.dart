@@ -24,7 +24,7 @@ class World {
     grid = new Map2D(width, height);
   }
 
-  void generate() async {
+  Future generate() async {
     print("Making noise structures");
     var generator = new NoiseGenerator(1/8, 1337, 6969);
     grid.mapInto((x, y) => generator.get(x.toDouble(), y.toDouble()) < 0 ? const StoneTile() : const GrassTile());
