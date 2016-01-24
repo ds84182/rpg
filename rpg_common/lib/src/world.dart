@@ -25,23 +25,9 @@ class World {
   }
 
   void generate() async {
-    //We use Futures in this code to give dart some breathing room
     print("Making noise structures");
-    Map2D<bool> noiseStructure = new Map2D(width, height);
-    //Random random = new Random();
-    /*for (var iter = 0; iter < 10; iter++) {
-      await new Future(() {
-        //Generate noise
-        noiseStructure.forEach((x, y, val) {
-          if (random.nextDouble() < 0.25)
-            noiseStructure.set(x, y, true);
-        });
-
-        //Smooth noise
-      });
-    }*/
-    //TODO: Noise wrapper with seeds and stuff
-    grid.mapInto((x, y) => simplex2(x.toDouble()/8.0, y.toDouble()/8.0) < 0 ? const StoneTile() : const GrassTile());
+    var generator = new NoiseGenerator(1/8, 1337, 6969);
+    grid.mapInto((x, y) => generator.get(x.toDouble(), y.toDouble()) < 0 ? const StoneTile() : const GrassTile());
     print("Done!");
   }
 }

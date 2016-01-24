@@ -9,8 +9,10 @@ library rpg_common;
 import 'dart:async';
 import 'dart:math';
 import 'package:noise/noise.dart';
+import 'package:vector_math/vector_math.dart';
 
 //export 'src/entity.dart';
 part 'src/game.dart';
 part 'src/map2d.dart';
+part 'src/noisegenerator.dart';
 part 'src/world.dart';
