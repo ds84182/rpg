@@ -1,5 +1,6 @@
 library rpg_client;
 
+import 'dart:async';
 import 'dart:html';
 
 import 'package:rpg_common/rpg_common.dart';
@@ -7,6 +8,8 @@ import 'package:rpg_common/rpg_common.dart';
 part 'render.dart';
 
 part 'render/world.dart';
+
+part 'resource.dart';
 
 class BrowserGame extends Game {
   CanvasElement canvas;
