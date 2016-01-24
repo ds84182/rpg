@@ -21,8 +21,8 @@ void RenderWorld(BrowserGame game, World world) {
   int startX = ((game.camera.x-(game.canvas.width/2))/WORLD_BLOCK_RENDER_SIZE).floor(); //TODO: Method in the camera to do this
   int startY = ((game.camera.y-(game.canvas.height/2))/WORLD_BLOCK_RENDER_SIZE).floor();
 
-  int endX = (startX+(game.canvas.width/WORLD_BLOCK_RENDER_SIZE)).floor();
-  int endY = (startY+(game.canvas.height/WORLD_BLOCK_RENDER_SIZE)).floor();
+  int endX = (startX+(game.canvas.width/WORLD_BLOCK_RENDER_SIZE)).ceil();
+  int endY = (startY+(game.canvas.height/WORLD_BLOCK_RENDER_SIZE)).ceil();
 
   //TODO: Map2D.forEachInRegion
   for (int x=startX; x<=endX; x++) {

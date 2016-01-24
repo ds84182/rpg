@@ -30,7 +30,23 @@ class BrowserGame extends Game {
         window.requestAnimationFrame(loop);
       }
     });
+
     window.onBlur.listen((ev) => focus = false);
+
+    window.onKeyDown.listen((kbev) {
+      print(kbev);
+      if (kbev.keyCode == KeyCode.UP) {
+        camera.y -= 8;
+      } else if (kbev.keyCode == KeyCode.DOWN) {
+        camera.y += 8;
+      }
+
+      if (kbev.keyCode == KeyCode.LEFT) {
+        camera.x -= 8;
+      } else if (kbev.keyCode == KeyCode.RIGHT) {
+        camera.x += 8;
+      }
+    });
   }
 
   void render() {
