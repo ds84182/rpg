@@ -1,16 +1,16 @@
 part of rpg_common;
 
 abstract class Entity extends CollisionObject {
-  World world;
+  Game game;
   double _x, _y, _width, _height;
   double vx, vy;
 
-  Entity(this.world, this._x, this._y, this._width, this._height) {
+  Entity(this.game, this._x, this._y, this._width, this._height) {
     updateAABB();
   }
 
   void updateAABB() {
-    aabb.setCenterAndHalfExtents(new Vector2(_x, _y), new Vector2(_width/2, _height/2));
+    aabb.setCenterAndHalfExtents(new Vector2(_x, _y), new Vector2(_width/2.0, _height/2.0));
     updateCollision();
   }
 
@@ -38,4 +38,8 @@ abstract class Entity extends CollisionObject {
     _height = val;
     updateAABB();
   }
+}
+
+class TestEntity extends Entity {
+  TestEntity(Game game, double x, double y) : super(game, x, y, 32.0, 32.0);
 }
