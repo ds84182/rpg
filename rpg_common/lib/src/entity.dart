@@ -38,6 +38,31 @@ abstract class Entity extends CollisionObject with Capable {
     _height = val;
     updateAABB();
   }
+
+  void moveBy(double x, double y) {
+    _x += x;
+    _y += y;
+    updateAABB();
+  }
+
+  bool handleCollision(CollisionObject other, CollisionResponse response) {
+    switch (response.direction) {
+      case CollisionDirection.LEFT:
+        x -= response.amount;
+        break;
+      case CollisionDirection.RIGHT:
+        x += response.amount;
+        break;
+      case CollisionDirection.TOP:
+        y -= response.amount;
+        break;
+      case CollisionDirection.BOTTOM:
+        y += response.amount;
+        break;
+    }
+
+    return true;
+  }
 }
 
 class TestEntity extends Entity {

@@ -55,11 +55,15 @@ class CollisionObject {
   List<Point<int>> cells = [];
   CollisionManager manager;
 
+  void moveBy(double x, double y) {
+    var vec = new Vector2(x, y);
+    aabb.min.add(vec);
+    aabb.max.add(vec);
+  }
+
   void updateCollision() => manager?.updateCells(this);
 
-  void onCollision(CollisionObject other, CollisionResponse response) {
-    //response.respond(aabb, other.aabb);
-  }
+  bool handleCollision(CollisionObject other, CollisionResponse response) => false;
 }
 
 class CollisionPair {
