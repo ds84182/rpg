@@ -18,4 +18,7 @@ part 'src/entity.dart';
 part 'src/game.dart';
 part 'src/map2d.dart';
 part 'src/noisegenerator.dart';
+part 'src/tile.dart';
 part 'src/world.dart';
+
+part 'src/tile/generic.dart';
