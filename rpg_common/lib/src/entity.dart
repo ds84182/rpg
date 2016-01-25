@@ -1,6 +1,6 @@
 part of rpg_common;
 
-abstract class Entity extends CollisionObject {
+abstract class Entity extends CollisionObject with Capable {
   Game game;
   double _x, _y, _width, _height;
   double vx, vy;
