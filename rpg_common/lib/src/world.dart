@@ -3,18 +3,6 @@
 
 part of rpg_common;
 
-abstract class Tile {
-  const Tile();
-}
-
-class StoneTile extends Tile {
-  const StoneTile();
-}
-
-class GrassTile extends Tile {
-  const GrassTile();
-}
-
 class World {
   Game game;
   int width, height;
@@ -27,7 +15,7 @@ class World {
   Future generate() async {
     print("Making noise structures");
     var generator = new NoiseGenerator(1/8, 1337, 6969);
-    grid.mapInto((x, y) => generator.get(x.toDouble(), y.toDouble()) < 0 ? const StoneTile() : const GrassTile());
+    grid.mapInto((x, y) => generator.get(x.toDouble(), y.toDouble()) < 0 ? Tiles.STONE : Tiles.GRASS);
     print("Done!");
   }
 }
