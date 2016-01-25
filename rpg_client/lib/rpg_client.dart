@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:html';
 
 import 'package:rpg_common/rpg_common.dart';
+import 'package:vector_math/vector_math.dart';
 
 part 'render.dart';
 
@@ -26,7 +27,7 @@ class BrowserGame extends Game {
     context = canvas.context2D;
 
     start().then((_) {
-      addEntity(testEnt1 = new TestEntity(this, 64.0, 64.0));
+      addEntity(testEnt1 = new TestEntity(this, 64.0, 64.0)..anchored=true);
       addEntity(testEnt2 = new TestEntity(this, 80.0, 80.0));
     });
 
@@ -52,6 +53,16 @@ class BrowserGame extends Game {
       } else if (kbev.keyCode == KeyCode.RIGHT) {
         camera.x += 8;
       }
+    });
+
+    canvas.onMouseUp.listen((mev) {
+      print(mev.offset);
+
+      // transform by camera matrix
+      var canvasPoint = camera.transformPoint(canvas, mev.offset);
+      print(canvasPoint);
+
+      addEntity(new TestEntity(this, canvasPoint.x.toDouble(), canvasPoint.y.toDouble()));
     });
   }
 

@@ -27,4 +27,10 @@ class Camera {
   applyTransform(CanvasElement canvas, CanvasRenderingContext2D ctx) {
     ctx.translate(-(x - (canvas.width * 0.5)).round(), -(y - (canvas.height * 0.5)).round());
   }
+
+  Vector2 transformPoint(CanvasElement canvas, Point<num> point) {
+    var vec = new Vector2(point.x.toDouble(), point.y.toDouble());
+
+    return (new Matrix2.rotation(angle).transform(vec))+new Vector2(x - (canvas.width * 0.5), y - (canvas.height * 0.5));
+  }
 }
