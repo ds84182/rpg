@@ -1,5 +1,9 @@
 part of rpg_common;
 
+class EntityCapability extends Capability {
+  const EntityCapability();
+}
+
 abstract class Entity extends CollisionObject with Capable {
   Game game;
   double _x, _y, _width, _height;
@@ -46,18 +50,19 @@ abstract class Entity extends CollisionObject with Capable {
   }
 
   bool handleCollision(CollisionObject other, CollisionResponse response) {
+    // Move AWAY from the collision, not torwards it
     switch (response.direction) {
       case CollisionDirection.LEFT:
-        x -= response.amount;
-        break;
-      case CollisionDirection.RIGHT:
         x += response.amount;
         break;
+      case CollisionDirection.RIGHT:
+        x -= response.amount;
+        break;
       case CollisionDirection.TOP:
-        y -= response.amount;
+        y += response.amount;
         break;
       case CollisionDirection.BOTTOM:
-        y += response.amount;
+        y -= response.amount;
         break;
     }
 
@@ -66,5 +71,10 @@ abstract class Entity extends CollisionObject with Capable {
 }
 
 class TestEntity extends Entity {
+  static int nextID = 0;
+  int id = nextID++;
   TestEntity(Game game, double x, double y) : super(game, x, y, 32.0, 32.0);
+
+  @override
+  String toString() => "TestEntity: $id";
 }

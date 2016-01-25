@@ -2,9 +2,20 @@ part of rpg_common;
 
 enum CollisionDirection { LEFT, RIGHT, BOTTOM, TOP }
 
+Map<CollisionDirection, CollisionDirection> directionOpposites = {
+  CollisionDirection.LEFT: CollisionDirection.RIGHT,
+  CollisionDirection.RIGHT: CollisionDirection.LEFT,
+
+  CollisionDirection.BOTTOM: CollisionDirection.TOP,
+  CollisionDirection.TOP: CollisionDirection.BOTTOM,
+};
+
 class CollisionResponse {
   CollisionDirection direction;
   double amount;
+  CollisionResponse _opposite;
+
+  CollisionResponse([this.direction, this.amount]);
 
   bool get isValid => direction != null;
 
@@ -13,25 +24,21 @@ class CollisionResponse {
 
   bool get isHorizontal => direction == CollisionDirection.LEFT ||
       direction == CollisionDirection.RIGHT;
+
+  CollisionResponse get opposite => _opposite ??= new CollisionResponse(directionOpposites[direction], amount);
 }
 
 CollisionResponse getCollisionResponse(Aabb2 a, Aabb2 b,
     [CollisionResponse response]) {
   response ??= new CollisionResponse();
 
-  /*if (!a.intersectsWithAabb2(b)) {
-    response.direction = null;
-    response.amount = 0.0;
-    return response;
-  }*/
+  final leftTop = b.max - a.min;
+  final rightBottom = a.max - b.min;
 
-  final leftBottom = a.max - b.min;
-  final rightTop = b.max - a.min;
-
-  final left = leftBottom.x;
-  final right = rightTop.x;
-  final bottom = leftBottom.y;
-  final top = rightTop.y;
+  final left = leftTop.x;
+  final right = rightBottom.x;
+  final bottom = rightBottom.y;
+  final top = leftTop.y;
 
   if (right < left && right < top && right < bottom) {
     response.direction = CollisionDirection.RIGHT;
@@ -53,6 +60,7 @@ CollisionResponse getCollisionResponse(Aabb2 a, Aabb2 b,
 class CollisionObject {
   Aabb2 aabb = new Aabb2();
   List<Point<int>> cells = [];
+  bool anchored = false;
   CollisionManager manager;
 
   void moveBy(double x, double y) {
@@ -141,13 +149,20 @@ class CollisionManager {
           .map((point) => cellMap[point])
           .where((cell) => cell != null)
           .expand((cell) => cell)
-          .where((cell) => cell != object));
+          .where((cellObject) => cellObject != object));
 
-  Iterable<CollisionPair> getCollisions(CollisionObject object) =>
+  Iterable<CollisionPair> getCollisions(CollisionObject object, [bool filter(CollisionObject obj)]) =>
       getPotentialCollisions(object)
+          .where(filter ?? (_) => true)
           .map((other) {
             if (object.aabb.intersectsWithAabb2(other.aabb)) {
-              return new CollisionPair(other, getCollisionResponse(object.aabb, other.aabb));
+              var response = getCollisionResponse(object.aabb, other.aabb);
+
+              if (response.amount < 1e-6) {
+                return null; //too small of a collision
+              }
+
+              return new CollisionPair(other, response);
             }
             return null;
           })
